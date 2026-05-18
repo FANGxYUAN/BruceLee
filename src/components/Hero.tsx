@@ -8,7 +8,7 @@ function ParticleField() {
   const ref = useRef<any>();
   const sphere = random.inSphere(new Float32Array(6000), { radius: 1.5 });
 
-  useFrame((state, delta) => {
+  useFrame((_state, delta) => {
     if (ref.current) {
       ref.current.rotation.x -= delta / 14;
       ref.current.rotation.y -= delta / 18;
