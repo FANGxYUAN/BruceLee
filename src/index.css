@@ -1,0 +1,205 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html.lenis {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+  .lenis.lenis-scrolling iframe {
+    pointer-events: none;
+  }
+  
+  body {
+    @apply bg-jkd-black text-white;
+    cursor: none;
+  }
+
+  * {
+    cursor: none;
+  }
+}
+
+@layer utilities {
+  .text-glow {
+    text-shadow: 0 0 30px rgba(212, 175, 55, 0.5), 0 0 60px rgba(212, 175, 55, 0.2);
+  }
+  .text-glow-red {
+    text-shadow: 0 0 30px rgba(153, 27, 27, 0.6), 0 0 60px rgba(153, 27, 27, 0.3);
+  }
+  .text-glow-white {
+    text-shadow: 0 0 20px rgba(255,255,255,0.15), 0 0 60px rgba(255,255,255,0.05);
+  }
+  .bg-noise {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.04;
+    pointer-events: none;
+  }
+  .card-shine {
+    position: relative;
+    overflow: hidden;
+  }
+  .card-shine::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 40%, rgba(212,175,55,0.05) 50%, transparent 60%);
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+  .card-shine:hover::before {
+    opacity: 1;
+  }
+  .gold-line {
+    background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+    height: 1px;
+  }
+  .section-divider {
+    @apply w-16 h-[1px] mx-auto my-8;
+    background: linear-gradient(90deg, transparent, #D4AF37 50%, transparent);
+  }
+  .text-gradient-gold {
+    background: linear-gradient(135deg, #D4AF37, #b45309, #D4AF37);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 4s ease-in-out infinite;
+  }
+  .vignette {
+    background: radial-gradient(ellipse at center, transparent 50%, rgba(5,5,5,0.8) 100%);
+  }
+  .cinematic-border {
+    border: 1px solid rgba(212,175,55,0.15);
+    position: relative;
+  }
+  .cinematic-border::before,
+  .cinematic-border::after {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-color: #D4AF37;
+    border-style: solid;
+    opacity: 0.6;
+  }
+  .cinematic-border::before {
+    top: -1px;
+    left: -1px;
+    border-width: 1px 0 0 1px;
+  }
+  .cinematic-border::after {
+    bottom: -1px;
+    right: -1px;
+    border-width: 0 1px 1px 0;
+  }
+  .mask-fade-bottom {
+    mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+  }
+  .mask-fade-top {
+    mask-image: linear-gradient(to top, black 70%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to top, black 70%, transparent 100%);
+  }
+}
+
+/* Scroll-driven reveal animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Horizontal lines that look like film frames */
+.film-frame::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(212,175,55,0.1) 20px, rgba(212,175,55,0.1) 22px);
+}
+.film-frame::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(212,175,55,0.1) 20px, rgba(212,175,55,0.1) 22px);
+}
+
+/* Water wave animation */
+@keyframes waterWave {
+  0% { transform: translateX(-100%) scaleY(1); }
+  50% { transform: translateX(0%) scaleY(1.2); }
+  100% { transform: translateX(100%) scaleY(1); }
+}
+.water-wave {
+  animation: waterWave 8s ease-in-out infinite;
+}
+
+/* Spinning yin-yang / circle decoration */
+@keyframes rotateSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.rotate-slow {
+  animation: rotateSlow 25s linear infinite;
+}
+.rotate-slow-reverse {
+  animation: rotateSlow 18s linear infinite reverse;
+}
+
+/* Glitch effect for hero */
+@keyframes glitch {
+  0%, 100% { clip-path: inset(0% 0 95% 0); transform: translate(-2px, 0); }
+  20% { clip-path: inset(30% 0 60% 0); transform: translate(2px, 0); }
+  40% { clip-path: inset(60% 0 25% 0); transform: translate(-2px, 0); }
+  60% { clip-path: inset(80% 0 5% 0); transform: translate(2px, 0); }
+  80% { clip-path: inset(10% 0 80% 0); transform: translate(-1px, 0); }
+}
+.glitch-layer {
+  animation: glitch 8s step-end infinite;
+}
+
+/* Brush stroke underline */
+.brush-underline {
+  position: relative;
+}
+.brush-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #D4AF37, #b45309);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s ease;
+}
+.brush-underline:hover::after {
+  transform: scaleX(1);
+}
+
+/* Number counter typography */
+.counter-num {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
